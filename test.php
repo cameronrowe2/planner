@@ -6,6 +6,13 @@ if ($mysqli->connect_errno) {
 }
 echo $mysqli->host_info . "<br>";
 
+$date = "21-06-2018";
+echo $date . "<br>";
+$date=date("Y-m-d",strtotime($date));
+echo $date . "<br>";
+
+
+
 $res = $mysqli->query("SELECT ID FROM Contacts");
 $str = "";
 while ($row = $res->fetch_assoc()) {

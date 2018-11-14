@@ -6,7 +6,7 @@ $( document ).ready(function() {
 
     $('body').on('click', '.add', function(){
         edit_date = $(this).attr('id').substring(1);
-        $('#calendar_popup').show();
+        $('#dairy_popup').show();
         $('#mask').show();
 
         $('#save_edit').hide();
@@ -16,7 +16,7 @@ $( document ).ready(function() {
     })
 
     $('body').on('click', '#mask', function(){
-        $('#calendar_popup').hide();
+        $('#dairy_popup').hide();
         $('#mask').hide();
     })
 
@@ -26,7 +26,7 @@ $( document ).ready(function() {
         var time = $('#time').val();
 
         $.ajax({
-            url: "calendar_create.php",
+            url: "dairy_create.php",
             type: 'get',
             dataType: 'json',
             data: {
@@ -38,15 +38,15 @@ $( document ).ready(function() {
           })
         .done(function( data ) {
             console.log(data)
-            $('#calendar_popup').hide();
+            $('#dairy_popup').hide();
             $('#mask').hide();
-            display_calendars()
+            display_dairys()
         });
     })
 
-    function display_calendars(callback) {
+    function display_dairys(callback) {
         $.ajax({
-            url: "calendars_get.php",
+            url: "dairys_get.php",
             type: 'get',
             dataType: 'json'
           })
@@ -69,7 +69,7 @@ $( document ).ready(function() {
         });
     }
 
-    display_calendars()
+    display_dairys()
 
     function get_date(date){
         var dd = date.getDate();
@@ -133,66 +133,170 @@ $( document ).ready(function() {
         return str;
     }
 
+    // a23
     function grid_layout(data){
         var today = new Date()
 
-        var d18m = new Date()
-        d18m.setMonth( d18m.getMonth() + 6 )
-        d18m.setFullYear( d18m.getFullYear() + 1 )
+        var tomorrow = new Date(today)
+        tomorrow.setDate( tomorrow.getDate() + 1)
+
+        var olddate = new Date()
+        olddate.setMonth( olddate.getMonth() - 1 )
+
+        // find oldest date
+        // if date is not older than a month - latest day is a month ago
+        data.forEach(function(v){
+            if(v.date < get_date(olddate)) {
+                olddate = new Date(v.date)
+            }
+        })
         
         var html = ""
 
-        for(var d = new Date(today); get_date(d) != get_date(d18m); d.setDate( d.getDate() + 1 )) {
-            // first date OR first day of month
-            if(get_date(d) == get_date(today) || d.getDate() == 1) {
+        var d = new Date(today)
 
-                var day = d.getDay();
+        
+        // start month
+        html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
 
-                html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
+        html += "<table border='1' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
 
-                html += "<table border='1' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
+        // start
+        html += "<tr>"
 
-                html += "<tr>"
+        var d2 = new Date(d)
+        d2.setDate(1)
+        console.log(d2)
 
-                for(var i = 0; i < day; i++){
-                    html += "<td></td>"
-                }
-            } else if(d.getDate() != 1 && d.getDay() == 0) {
-                html += "<tr>"
-            }
+        // first date OR first day of month
+        if( d2.getDate() == 1 ) {
 
-            // add box
-            html += "<td id='d" + get_date(d) + "' class='add'>" + get_date(d)
+            var day = d2.getDay();
 
-            // add any calendars
-            data.forEach(function(v){
-                if(v.date == get_date(d)) {
-                    console.log('in')
-                    html += "<div class='edit' id='c" + v.ID + "'>" + v.title + "</div>"
-                }
-            })
-            
-            // end box
-            html += "</td>"
-
-            // check if next date is new month - if so end month
-            var d2 = new Date(d)
-            d2.setDate( d2.getDate() + 1 )
-            if(d2.getDate() == 1){
-                var day = d.getDay();
-
-                for(var i = day + 1; i < 7; i++){
-                    html += "<td></td>"
-                }
-
-                html += "</tr></table>"
-            }
-
-            // if day is 6 reset row
-            if(d.getDay() === 6) {
-                html += "</tr>"
+            for(var i = 0; i < day; i++){
+                html += "<td></td>"
+                // d2.setDate( d2.getDate() + 1 )
             }
         }
+        
+        do {
+            if(d2.getDay() == 0) {
+                html += "<tr>"
+            }
+
+            html += "<td>" + get_date(d2) + "</td>"
+
+            if(d2.getDay() == 6) {
+                html += "</tr>"
+            }
+
+            d2.setDate( d2.getDate() + 1 )
+        }
+        while ( d2.getDate() != 1 && get_date(d2) != get_date( tomorrow ) );
+
+
+        var day = d2.getDay();
+
+        for(var i = day; i < 7; i++){
+            html += "<td></td>"
+        }
+        
+        html += "</tr>"
+
+        // end month
+        html += "</table>"
+
+
+
+        
+
+        // d.setDate( d.getDate() - 1 )
+
+        // while(get_date(d) != get_date(olddate)) {
+            // console.log(get_date(d))
+
+
+            
+
+
+
+
+
+            // var day = d.getDay();
+
+            // console.log(day)
+
+            // html += "<table>"
+            // html += "<tr>"
+
+            // html_row = ""
+
+            // if(get_date(d) == get_date(today)) {
+            //     for(var i = day + 1; i < 7; i++) {
+            //         html_row = "<td></td>" + html_row
+            //     }
+            // }
+
+            // // render row
+            // for(var i = day; i >= 0; i--){
+            //     html_row = "<td>" + get_date(d) + "</td>" + html_row
+            //     d.setDate( d.getDate() - 1 )
+            // }
+
+            // html += html_row
+            // html += "</tr>"
+            // html += "</table>"
+
+            // // first date OR first day of month
+            // if(get_date(d) == get_date(today) /* || d.getDate() == 1 */) {
+
+            //     var day = d.getDay();
+
+            //     html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
+
+            //     html += "<table border='1' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
+
+            //     html += "<tr>"
+
+            //     for(var i = 0; i < day; i++){
+            //         html += "<td></td>"
+            //     }
+            // } else if(d.getDate() != 1 && d.getDay() == 0) {
+            //     html += "<tr>"
+            // }
+
+            // // add box
+            // html += "<td id='d" + get_date(d) + "' class='add'>" + get_date(d)
+
+            // // add any calendars
+            // data.forEach(function(v){
+            //     if(v.date == get_date(d)) {
+            //         console.log('in')
+            //         html += "<div class='edit' id='c" + v.ID + "'>" + v.title + "</div>"
+            //     }
+            // })
+            
+            // // end box
+            // html += "</td>"
+
+            // // check if next date is new month - if so end month
+            // var d2 = new Date(d)
+            // d2.setDate( d2.getDate() + 1 )
+            // if(d2.getDate() == 1){
+            //     var day = d.getDay();
+
+            //     for(var i = day + 1; i < 7; i++){
+            //         html += "<td></td>"
+            //     }
+
+            //     html += "</tr></table>"
+            // }
+
+            // // if day is 6 reset row
+            // if(d.getDay() === 6) {
+            //     html += "</tr>"
+            // }
+        // }
 
         $('#data').html(html);
     }
@@ -201,7 +305,7 @@ $( document ).ready(function() {
     //     return '<tr><td>'+v.ID+'</td><td>'+v.name+'</td><td>'+v.email+'</td><td>'+v.mobile+'</td><td style="background-color: green" class="edit">EDIT</td><td style="background-color: red" class="delete">DELETE</td></tr>';
     // }
 
-    $('body').on('click', '#data .edit', function(){
+    $('body').on('click', '.edit', function(){
         // alert("BAM")
         // a23
         // console.log($(this).parent().find('td').eq(0).text())
@@ -211,7 +315,7 @@ $( document ).ready(function() {
         console.log(edit_id)
 
         $.ajax({
-            url: "calendar_get.php",
+            url: "dairy_get.php",
             type: 'get',
             dataType: 'json',
             data: {
@@ -221,7 +325,7 @@ $( document ).ready(function() {
         .done(function( data ) {
             console.log(data)
 
-            $('#calendar_popup').show();
+            $('#dairy_popup').show();
             $('#mask').show();
 
             $('#save_edit').hide();
@@ -233,14 +337,13 @@ $( document ).ready(function() {
             edit_date = data.date
             $('#title').val(data.title)
             $('#description').val(data.description)
-            $('#time').val(data.time)
         });
     })
 
     $('body').on('click', '#delete', function(){
 
         $.ajax({
-            url: "calendar_delete.php",
+            url: "dairy_delete.php",
             type: 'get',
             dataType: 'json',
             data: {
@@ -248,8 +351,8 @@ $( document ).ready(function() {
             }
           })
         .done(function( data ) {
-            display_calendars()
-            $('#calendar_popup').hide();
+            display_dairys()
+            $('#dairy_popup').hide();
             $('#mask').hide();
         });
     })
@@ -258,24 +361,22 @@ $( document ).ready(function() {
 
         var title = $('#title').val();
         var description = $('#description').val();
-        var time = $('#time').val();
 
         $.ajax({
-            url: "calendar_edit.php",
+            url: "dairy_edit.php",
             type: 'get',
             dataType: 'json',
             data: {
                 id: edit_id,
                 date: edit_date,
                 title: title,
-                description: description,
-                time: time
+                description: description
             }
           })
         .done(function( data ) {
-            $('#calendar_popup').hide();
+            $('#dairy_popup').hide();
             $('#mask').hide();
-            display_calendars()
+            display_dairys()
         });
     })
 

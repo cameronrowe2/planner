@@ -1,4 +1,4 @@
-#calendar_popup {
+#dairy_popup {
     display: none;
     position: fixed;
     z-index: 21;
@@ -10,7 +10,7 @@
     padding: 10px;
 }
 
-#calendar_popup * {
+#dairy_popup * {
     display: block;
     margin-bottom: 10px;
 }
@@ -24,8 +24,4 @@
     left: 0;
     z-index: 20;
     background-color: rgba(0, 0, 0, 0.6);;
-}
-
-.edit {
-    border: 5px solid red;
 }
