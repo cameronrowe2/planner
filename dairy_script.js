@@ -141,6 +141,7 @@ $( document ).ready(function() {
         tomorrow.setDate( tomorrow.getDate() + 1)
 
         var olddate = new Date()
+        // olddate.setDate( olddate.getDate() - 2)
         olddate.setMonth( olddate.getMonth() - 1 )
 
         // find oldest date
@@ -155,58 +156,66 @@ $( document ).ready(function() {
 
         var d = new Date(today)
 
-        
-        // start month
-        html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
+        while(get_date(d) > get_date(olddate)){
 
-        html += "<table border='1' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
+            // start month
+            html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
 
-        // start
-        html += "<tr>"
+            html += "<table border='1' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
 
-        var d2 = new Date(d)
-        d2.setDate(1)
-        console.log(d2)
+            // start
+            html += "<tr>"
 
-        // first date OR first day of month
-        if( d2.getDate() == 1 ) {
+            var d2 = new Date(d)
+            d2.setDate(1)
 
+            if(get_date(d2) < get_date(olddate)) {
+                console.log('here2')
+                d2 = new Date(olddate)
+            }
+
+            console.log(d2)
+
+            // first date OR first day of month
             var day = d2.getDay();
 
             for(var i = 0; i < day; i++){
                 html += "<td></td>"
                 // d2.setDate( d2.getDate() + 1 )
             }
-        }
-        
-        do {
-            if(d2.getDay() == 0) {
-                html += "<tr>"
+            
+            
+            do {
+                if(d2.getDay() == 0) {
+                    html += "<tr>"
+                }
+
+                html += "<td>" + get_date(d2) + "</td>"
+
+                if(d2.getDay() == 6) {
+                    html += "</tr>"
+                }
+
+                d2.setDate( d2.getDate() + 1 )
             }
+            while ( d2.getDate() != 1 && get_date(d2) != get_date( tomorrow ) );
 
-            html += "<td>" + get_date(d2) + "</td>"
 
-            if(d2.getDay() == 6) {
-                html += "</tr>"
+            var day = d2.getDay();
+
+            for(var i = day; i < 7; i++){
+                html += "<td></td>"
             }
+            
+            html += "</tr>"
 
-            d2.setDate( d2.getDate() + 1 )
+            // end month
+            html += "</table>"
+
+            
+            d.setDate(1)
+            d.setDate( d.getDate() - 1 )
         }
-        while ( d2.getDate() != 1 && get_date(d2) != get_date( tomorrow ) );
-
-
-        var day = d2.getDay();
-
-        for(var i = day; i < 7; i++){
-            html += "<td></td>"
-        }
-        
-        html += "</tr>"
-
-        // end month
-        html += "</table>"
-
-
 
         
 
