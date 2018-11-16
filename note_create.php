@@ -2,13 +2,12 @@
 
 session_start();
 
+require 'db.php';
+
 $title = $_GET['title'];
 $description = $_GET['description'];
 
-$mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
+$mysqli = m_connect();
 
 $stmt = $mysqli->prepare("INSERT INTO Notes (title, description, user_id)  VALUES (?, ?, ?)");
 $stmt->bind_param("sss", $title, $description, $_SESSION['ID']);

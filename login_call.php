@@ -2,13 +2,12 @@
 
 session_start();
 
+require 'db.php';
+
 $email = $_GET['email'];
 $password = $_GET['password'];
 
-$mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
+$mysqli = m_connect();
 
 $sql = "SELECT * FROM Login where email like '" . $email . "'";
 

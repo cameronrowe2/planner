@@ -2,14 +2,13 @@
 
 session_start();
 
+require 'db.php';
+
 $ID = $_GET['id'];
 $title = $_GET['title'];
 $description = $_GET['description'];
 
-$mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
+$mysqli = m_connect();
 // echo $mysqli->host_info . "<br>";
 
 $stmt = $mysqli->prepare("UPDATE Notes SET title=?, description=? WHERE ID = ? AND user_id = ?");

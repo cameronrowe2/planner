@@ -2,12 +2,11 @@
 
 session_start();
 
+require 'db.php';
+
 $ID = $_GET['id'];
 
-$mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
-if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
+$mysqli = m_connect();
 // echo $mysqli->host_info . "<br>";
 
 // $res = $mysqli->query("SELECT * FROM Notes WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID']);
@@ -31,7 +30,6 @@ while ($row = $res->fetch_assoc()) {
         "title" => $row['title'],
         "description" => $row['description']
     ];
-    // echo " ID = " . $row['ID'] . ", name = " . $row['name'] . ", email = " . $row['email'] . ", phone = " . $row['phone'] . "<br>";
 }
 
 echo json_encode($arr);
