@@ -16,15 +16,18 @@ $mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-// echo $mysqli->host_info . "<br>";
 
-$sql = "UPDATE Contacts SET name='" . $name . "', email='" . $email . "', mobile='" . $mobile . "', phone='" . $phone . "', reason='" . $reason . "', website='" . $website . "', address='" . $address . "', comments='" . $comments . "' WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID'];
+$stmt = $mysqli->prepare("UPDATE Contacts SET name=?, email=?, mobile=?, phone=?, reason=?, website=?, address=?, comments=? WHERE ID = ? AND user_id = ?");
 
+$stmt->bind_param("ssssssssss", $name, $email, $mobile, $phone, $reason, $website, $address, $comments, $ID, $_SESSION['ID']);
 
-if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(["success" => true]);
-} else {
-    echo json_encode(["success" => false, "error" => $conn->error]);
+if( !$stmt->execute() ) {
+    echo json_encode(["success" => false]);
+    die();
 }
+
+$stmt->close();
+
+echo json_encode(["success" => true]);
 
 ?>

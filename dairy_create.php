@@ -11,14 +11,19 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = "INSERT INTO Dairy (date, title, description, user_id)  VALUES ('". $date . "', '" . $title . "', '" . $description . "', '" . $_SESSION['ID'] . "')";
+$stmt = $mysqli->prepare("INSERT INTO Dairy (date, title, description, user_id)  VALUES (?, ?, ?, ?)");
 
-if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(["success" => true]);
-} else {
+$stmt->bind_param("ssss", $date, $title, $description, $_SESSION['ID']);
+
+if( !$stmt->execute() ) {
     echo json_encode(["success" => false]);
+    die();
 }
 
+$stmt->close();
+
 $mysqli->close();
+
+echo json_encode(["success" => true]);
 
 ?>

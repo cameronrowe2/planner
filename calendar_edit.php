@@ -14,15 +14,17 @@ $mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
-// echo $mysqli->host_info . "<br>";
 
-$sql = "UPDATE Calendar SET date='" . $date . "', title='" . $title . "', description='" . $description . "', time='" . $time . "' WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID'];
+$stmt = $mysqli->prepare("UPDATE Calendar SET date=?, title=?, description=?, time=? WHERE ID = ? AND user_id = ?");
 
+$stmt->bind_param("ssssss", $date, $title, $description, $time, $ID, $_SESSION['ID']);
 
-if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(["success" => true]);
-} else {
-    echo json_encode(["success" => false, "error" => $conn->error]);
+if( !$stmt->execute() ) {
+    echo json_encode(["success" => false]);
+    die();
 }
 
+$stmt->close();
+
+echo json_encode(["success" => true]);
 ?>

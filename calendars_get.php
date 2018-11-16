@@ -8,7 +8,19 @@ if ($mysqli->connect_errno) {
 }
 // echo $mysqli->host_info . "<br>";
 
-$res = $mysqli->query("SELECT * FROM Calendar WHERE user_id = " . $_SESSION['ID']);
+$stmt = $mysqli->prepare("SELECT * FROM Calendar WHERE user_id = ?");
+
+$stmt->bind_param("s", $_SESSION['ID']);
+
+if( !$stmt->execute() ) {
+    echo json_encode(["success" => false]);
+    die();
+}
+
+$res = $stmt->get_result();
+
+$stmt->close();
+
 $arr = [];
 while ($row = $res->fetch_assoc()) {
     $arr[] = [

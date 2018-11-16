@@ -16,14 +16,19 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = "INSERT INTO Contacts (name, email, mobile, phone, reason, website, address, comments, user_id)  VALUES ('". $name . "', '" . $email . "', '" . $mobile . "', '" . $phone . "', '" . $reason . "', '" . $website . "', '" . $address . "', '" . $comments . "', '" . $_SESSION['ID'] . "')";
+$stmt = $mysqli->prepare("INSERT INTO Contacts (name, email, mobile, phone, reason, website, address, comments, user_id)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(["success" => true]);
-} else {
+$stmt->bind_param("sssssssss", $name, $email, $mobile, $phone, $reason, $website, $address, $comments, $_SESSION['ID']);
+
+if( !$stmt->execute() ) {
     echo json_encode(["success" => false]);
+    die();
 }
 
+$stmt->close();
+
 $mysqli->close();
+
+echo json_encode(["success" => true]);
 
 ?>
