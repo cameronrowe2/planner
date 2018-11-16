@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 $ID = $_GET['id'];
 
 $mysqli = new mysqli("127.0.0.1", "root", "root", "planner");
@@ -7,7 +9,7 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$res = $mysqli->query("DELETE FROM Calendar WHERE ID = " . $ID);
+$res = $mysqli->query("DELETE FROM Calendar WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID']);
 // while ($row = $res->fetch_assoc()) {
 //     $arr = [
 //         "ID" => $row['ID'],

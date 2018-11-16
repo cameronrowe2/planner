@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 $ID = $_GET['id'];
 $title = $_GET['title'];
 $description = $_GET['description'];
@@ -10,13 +12,16 @@ if ($mysqli->connect_errno) {
 }
 // echo $mysqli->host_info . "<br>";
 
-$sql = "UPDATE Notes SET title='" . $title . "', description='" . $description . "' WHERE ID = " . $ID;
+$stmt = $mysqli->prepare("UPDATE Notes SET title=?, description=? WHERE ID = ? AND user_id = ?");
 
+$stmt->bind_param("ssss", $title, $description, $ID, $_SESSION['ID']);
 
-if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(["success" => true]);
+if( !$stmt->execute() ) {
+    echo json_encode(["success" => false]);
 } else {
-    echo json_encode(["success" => false, "error" => $conn->error]);
+    echo json_encode(["success" => true]);
 }
+
+$stmt->close();
 
 ?>

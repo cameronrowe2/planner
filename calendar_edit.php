@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 $ID = $_GET['id'];
 $date = $_GET['date'];
 $title = $_GET['title'];
@@ -14,7 +16,7 @@ if ($mysqli->connect_errno) {
 }
 // echo $mysqli->host_info . "<br>";
 
-$sql = "UPDATE Calendar SET date='" . $date . "', title='" . $title . "', description='" . $description . "', time='" . $time . "' WHERE ID = " . $ID;
+$sql = "UPDATE Calendar SET date='" . $date . "', title='" . $title . "', description='" . $description . "', time='" . $time . "' WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID'];
 
 
 if ($mysqli->query($sql) === TRUE) {

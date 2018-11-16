@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 $ID = $_GET['id'];
 $name = $_GET['name'];
 $email = $_GET['email'];
@@ -16,7 +18,7 @@ if ($mysqli->connect_errno) {
 }
 // echo $mysqli->host_info . "<br>";
 
-$sql = "UPDATE Contacts SET name='" . $name . "', email='" . $email . "', mobile='" . $mobile . "', phone='" . $phone . "', reason='" . $reason . "', website='" . $website . "', address='" . $address . "', comments='" . $comments . "' WHERE ID = " . $ID;
+$sql = "UPDATE Contacts SET name='" . $name . "', email='" . $email . "', mobile='" . $mobile . "', phone='" . $phone . "', reason='" . $reason . "', website='" . $website . "', address='" . $address . "', comments='" . $comments . "' WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID'];
 
 
 if ($mysqli->query($sql) === TRUE) {

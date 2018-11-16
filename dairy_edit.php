@@ -1,5 +1,7 @@
 <?php 
 
+session_start();
+
 $ID = $_GET['id'];
 $date = $_GET['date'];
 $title = $_GET['title'];
@@ -11,7 +13,7 @@ if ($mysqli->connect_errno) {
 }
 // echo $mysqli->host_info . "<br>";
 
-$sql = "UPDATE Dairy SET date='" . $date . "', title='" . $title . "', description='" . $description . "' WHERE ID = " . $ID;
+$sql = "UPDATE Dairy SET date='" . $date . "', title='" . $title . "', description='" . $description . "' WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID'];
 
 
 if ($mysqli->query($sql) === TRUE) {

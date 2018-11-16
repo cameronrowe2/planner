@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $date = $_GET['date'];
 $title = $_GET['title'];
 $description = $_GET['description'];
@@ -9,7 +11,7 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = "INSERT INTO Dairy (date, title, description)  VALUES ('". $date . "', '" . $title . "', '" . $description . "')";
+$sql = "INSERT INTO Dairy (date, title, description, user_id)  VALUES ('". $date . "', '" . $title . "', '" . $description . "', '" . $_SESSION['ID'] . "')";
 
 if ($mysqli->query($sql) === TRUE) {
     echo json_encode(["success" => true]);

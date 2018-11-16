@@ -1,8 +1,20 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION['ID'])){
+    header('Location: login.php');
+    die();
+}
+?>
+
 <html>
     <head>
         <script src="jquery.min.js"></script>
         <script src="notes_script.js"></script>
         <link rel="stylesheet" type="text/css" href="notes_styles.css">
+        <script src="logout_script.js"></script>
+        <link rel="stylesheet" type="text/css" href="logout_styles.css">
     </head>
     <body>
         <div>

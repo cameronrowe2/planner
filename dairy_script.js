@@ -190,7 +190,19 @@ $( document ).ready(function() {
                     html += "<tr>"
                 }
 
-                html += "<td>" + get_date(d2) + "</td>"
+                var exists = false;
+
+                data.forEach(function(v){
+                    console.log(v.ID)
+                    if(v.date == get_date(d2)) {
+                        exists = true;
+                        html += "<td class='edit' id='c" + v.ID + "'>" + get_date(d2) + "</td>"
+                    }
+                })
+
+                if(!exists) {
+                    html += "<td class='add' id='d" + get_date(d2) + "'>" + get_date(d2) + "</td>"
+                }
 
                 if(d2.getDay() == 6) {
                     html += "</tr>"

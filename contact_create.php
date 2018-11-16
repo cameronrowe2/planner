@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $name = $_GET['name'];
 $email = $_GET['email'];
 $mobile = $_GET['mobile'];
@@ -14,7 +16,7 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = "INSERT INTO Contacts (name, email, mobile, phone, reason, website, address, comments)  VALUES ('". $name . "', '" . $email . "', '" . $mobile . "', '" . $phone . "', '" . $reason . "', '" . $website . "', '" . $address . "', '" . $comments . "')";
+$sql = "INSERT INTO Contacts (name, email, mobile, phone, reason, website, address, comments, user_id)  VALUES ('". $name . "', '" . $email . "', '" . $mobile . "', '" . $phone . "', '" . $reason . "', '" . $website . "', '" . $address . "', '" . $comments . "', '" . $_SESSION['ID'] . "')";
 
 if ($mysqli->query($sql) === TRUE) {
     echo json_encode(["success" => true]);
