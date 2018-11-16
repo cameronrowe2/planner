@@ -6,7 +6,7 @@ require 'db.php';
 
 $mysqli = m_connect();
 
-$stmt = $mysqli->prepare("SELECT * FROM Contacts WHERE user_id = ?");
+$stmt = $mysqli->prepare("SELECT ID, name, email, mobile FROM Contacts WHERE user_id = ?");
 
 $stmt->bind_param("s", $_SESSION['ID']);
 
@@ -15,19 +15,20 @@ if( !$stmt->execute() ) {
     die();
 }
 
-$res = $stmt->get_result();
+$stmt->bind_result($ID, $name, $email, $mobile);
 
-$stmt->close();
 
 $arr = [];
-while ($row = $res->fetch_assoc()) {
+while ($stmt->fetch()) {
     $arr[] = [
-        "ID" => $row['ID'],
-        "name" => htmlspecialchars($row['name']),
-        "email" => htmlspecialchars($row['email']),
-        "mobile" => htmlspecialchars($row['mobile'])
+        "ID" => $ID,
+        "name" => htmlspecialchars($name),
+        "email" => htmlspecialchars($email),
+        "mobile" => htmlspecialchars($mobile)
     ];
 }
+
+$stmt->close();
 
 echo json_encode($arr);
 

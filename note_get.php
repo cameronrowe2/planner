@@ -7,11 +7,8 @@ require 'db.php';
 $ID = $_GET['id'];
 
 $mysqli = m_connect();
-// echo $mysqli->host_info . "<br>";
 
-// $res = $mysqli->query("SELECT * FROM Notes WHERE ID = " . $ID . " AND user_id = " . $_SESSION['ID']);
-
-$stmt = $mysqli->prepare("SELECT * FROM Notes WHERE ID = ? AND user_id = ?");
+$stmt = $mysqli->prepare("SELECT ID, title, description FROM Notes WHERE ID = ? AND user_id = ?");
 
 $stmt->bind_param("ss", $ID, $_SESSION['ID']);
 
@@ -20,17 +17,17 @@ if( !$stmt->execute() ) {
     die();
 }
 
-$res = $stmt->get_result();
+$stmt->bind_result($ID, $title, $description);
 
-$stmt->close();
-
-while ($row = $res->fetch_assoc()) {
+while ($stmt->fetch()) {
     $arr = [
-        "ID" => $row['ID'],
-        "title" => $row['title'],
-        "description" => $row['description']
+        "ID" => $ID,
+        "title" => $title,
+        "description" => $description
     ];
 }
+
+$stmt->close();
 
 echo json_encode($arr);
 

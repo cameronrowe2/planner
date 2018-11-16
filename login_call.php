@@ -9,13 +9,21 @@ $password = $_GET['password'];
 
 $mysqli = m_connect();
 
-$sql = "SELECT * FROM Login where email like '" . $email . "'";
+$stmt = $mysqli->prepare("SELECT ID, password FROM Login where email like ?");
 
-$res = $mysqli->query($sql);
-if($row = $res->fetch_assoc()){
+$stmt->bind_param("s", $email);
+
+if( !$stmt->execute() ) {
+    echo json_encode(["success" => false]);
+    die();
+}
+
+$stmt->bind_result($ID, $hash_password);
+
+if($stmt->fetch()){
     // check password
-    if(password_verify($password, $row['password'])) {
-        $_SESSION["ID"] = $row['ID'];
+    if(password_verify($password, $hash_password)) {
+        $_SESSION["ID"] = $ID;
         echo json_encode(["success" => true]);
     } else {
         echo json_encode(["success" => false]);
@@ -24,11 +32,6 @@ if($row = $res->fetch_assoc()){
     echo json_encode(["success" => false]);
 }
 
-
-
-
-
-
-
+$stmt->close();
 
 ?>

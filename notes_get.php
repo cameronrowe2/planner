@@ -7,7 +7,7 @@ require 'db.php';
 $mysqli = m_connect();
 // echo $mysqli->host_info . "<br>";
 
-$stmt = $mysqli->prepare("SELECT * FROM Notes WHERE user_id = ?");
+$stmt = $mysqli->prepare("SELECT ID, title, description FROM Notes WHERE user_id = ?");
 
 $stmt->bind_param("s", $_SESSION['ID']);
 
@@ -16,19 +16,19 @@ if( !$stmt->execute() ) {
     die();
 }
 
-$res = $stmt->get_result();
+$stmt->bind_result($ID, $title, $description);
+
+$arr = [];
+while ($stmt->fetch()) {
+    $arr[] = [
+        "ID" => $ID,
+        "title" => htmlspecialchars($title),
+        "description" => htmlspecialchars($description)
+    ];
+}
 
 $stmt->close();
 
-$arr = [];
-while ($row = $res->fetch_assoc()) {
-    $arr[] = [
-        "ID" => $row['ID'],
-        "title" => htmlspecialchars($row['title']),
-        "description" => htmlspecialchars($row['description'])
-    ];
-    // echo " ID = " . $row['ID'] . ", name = " . $row['name'] . ", email = " . $row['email'] . ", phone = " . $row['phone'] . "<br>";
-}
 
 echo json_encode($arr);
 

@@ -8,7 +8,7 @@ $ID = $_GET['id'];
 
 $mysqli = m_connect();
 
-$stmt = $mysqli->prepare("SELECT * FROM Dairy WHERE ID = ? AND user_id = ?");
+$stmt = $mysqli->prepare("SELECT ID, date, title, description FROM Dairy WHERE ID = ? AND user_id = ?");
 
 $stmt->bind_param("ss", $ID, $_SESSION['ID']);
 
@@ -17,18 +17,18 @@ if( !$stmt->execute() ) {
     die();
 }
 
-$res = $stmt->get_result();
+$stmt->bind_result($ID, $date, $title, $description);
 
-$stmt->close();
-
-while ($row = $res->fetch_assoc()) {
+while ($stmt->fetch()) {
     $arr = [
-        "ID" => $row['ID'],
-        "date" => $row['date'],
-        "title" => $row['title'],
-        "description" => $row['description']
+        "ID" => $ID,
+        "date" => $date,
+        "title" => $title,
+        "description" => $description
     ];
 }
+
+$stmt->close();
 
 echo json_encode($arr);
 

@@ -7,7 +7,7 @@ require 'db.php';
 $mysqli = m_connect();
 // echo $mysqli->host_info . "<br>";
 
-$stmt = $mysqli->prepare("SELECT * FROM Calendar WHERE user_id = ?");
+$stmt = $mysqli->prepare("SELECT ID, date, title, description, time FROM Calendar WHERE user_id = ?");
 
 $stmt->bind_param("s", $_SESSION['ID']);
 
@@ -16,21 +16,20 @@ if( !$stmt->execute() ) {
     die();
 }
 
-$res = $stmt->get_result();
-
-$stmt->close();
+$stmt->bind_result($ID, $date, $title, $description, $time);
 
 $arr = [];
-while ($row = $res->fetch_assoc()) {
+while ($stmt->fetch()) {
     $arr[] = [
-        "ID" => $row['ID'],
-        "date" => htmlspecialchars($row['date']),
-        "title" => htmlspecialchars($row['title']),
-        "description" => htmlspecialchars($row['description']),
-        "time" => substr($row['time'], 0, 5)
+        "ID" => $ID,
+        "date" => htmlspecialchars($date),
+        "title" => htmlspecialchars($title),
+        "description" => htmlspecialchars($description),
+        "time" => substr($time, 0, 5)
     ];
-    // echo " ID = " . $row['ID'] . ", name = " . $row['name'] . ", email = " . $row['email'] . ", phone = " . $row['phone'] . "<br>";
 }
+
+$stmt->close();
 
 echo json_encode($arr);
 

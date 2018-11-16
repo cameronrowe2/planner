@@ -6,7 +6,7 @@ require 'db.php';
 
 $mysqli = m_connect();
 
-$stmt = $mysqli->prepare("SELECT * FROM Dairy WHERE user_id = ?");
+$stmt = $mysqli->prepare("SELECT ID, date, title, description FROM Dairy WHERE user_id = ?");
 
 $stmt->bind_param("s", $_SESSION['ID']);
 
@@ -15,20 +15,19 @@ if( !$stmt->execute() ) {
     die();
 }
 
-$res = $stmt->get_result();
-
-$stmt->close();
-
+$stmt->bind_result($ID, $date, $title, $description);
 
 $arr = [];
-while ($row = $res->fetch_assoc()) {
+while ($stmt->fetch()) {
     $arr[] = [
-        "ID" => $row['ID'],
-        "date" => htmlspecialchars($row['date']),
-        "title" => htmlspecialchars($row['title']),
-        "description" => htmlspecialchars($row['description'])
+        "ID" => $ID,
+        "date" => htmlspecialchars($date),
+        "title" => htmlspecialchars($title),
+        "description" => htmlspecialchars($description)
     ];
 }
+
+$stmt->close();
 
 echo json_encode($arr);
 

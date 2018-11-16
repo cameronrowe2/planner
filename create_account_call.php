@@ -11,9 +11,25 @@ $password2 = $_GET['password2'];
 $mysqli = m_connect();
 
 // check if email exists
-$sql = "SELECT * FROM Login where email like '" . $email . "'";
-$res = $mysqli->query($sql);
-if($res->num_rows > 0) {
+
+
+$stmt = $mysqli->prepare("SELECT ID FROM Login where email like ?");
+
+$stmt->bind_param("s", $email);
+
+if( !$stmt->execute() ) {
+    echo json_encode(["success" => false]);
+    die();
+}
+
+$stmt->bind_result($ID);
+
+$count = 0;
+if($stmt->fetch()){
+    $count++;
+}
+
+if($count > 0) {
     echo json_encode(["success" => false]);
     exit();
 }
@@ -27,13 +43,15 @@ if($password != $password2) {
 // hash password
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
-// insert into table
-$sql = "INSERT INTO Login (email, password)  VALUES ('". $email . "', '" . $hash . "')";
+$stmt = $mysqli->prepare("INSERT INTO Login (email, password)  VALUES (?, ?)");
 
-if ($mysqli->query($sql) === TRUE) {
-    echo json_encode(["success" => true]);
-} else {
+$stmt->bind_param("ss", $email, $hash);
+
+if( !$stmt->execute() ) {
     echo json_encode(["success" => false]);
+    die();
 }
+
+echo json_encode(["success" => true]);
 
 ?>
