@@ -7,7 +7,22 @@ $( document ).ready(function() {
     $('body').on('click', '.add', function(){
         edit_date = $(this).attr('id').substring(1);
         $('#calendar_popup').show();
-        $('#mask').show();
+        setTimeout(function(){
+            $('#mask').show();
+        }, 300)
+
+        $('#save_edit').hide();
+        $('#submit').hide();
+        $('#delete').hide();
+        $('#submit').show();
+    })
+
+    $('body').on('touchend', '.add', function(){
+        edit_date = $(this).attr('id').substring(1);
+        $('#calendar_popup').show();
+        setTimeout(function(){
+            $('#mask').show();
+        }, 300)
 
         $('#save_edit').hide();
         $('#submit').hide();
@@ -16,6 +31,11 @@ $( document ).ready(function() {
     })
 
     $('body').on('click', '#mask', function(){
+        $('#calendar_popup').hide();
+        $('#mask').hide();
+    })
+
+    $('body').on('touchend', '#mask', function(){
         $('#calendar_popup').hide();
         $('#mask').hide();
     })
@@ -150,7 +170,7 @@ $( document ).ready(function() {
 
                 html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
 
-                html += "<table class='table' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
+                html += "<div class='table_parent'><table class='table' class='data' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
 
                 html += "<tr>"
 
@@ -162,7 +182,7 @@ $( document ).ready(function() {
             }
 
             // add box
-            html += "<td id='d" + get_date(d) + "' class='add'>" + get_date(d)
+            html += "<td id='d" + get_date(d) + "' class='add'>" + get_date(d).substring(8)
 
             // add any calendars
             data.forEach(function(v){
@@ -185,7 +205,7 @@ $( document ).ready(function() {
                     html += "<td></td>"
                 }
 
-                html += "</tr></table>"
+                html += "</tr></table></div>"
             }
 
             // if day is 6 reset row
@@ -202,14 +222,20 @@ $( document ).ready(function() {
     // }
 
     $('body').on('click', '#data .edit', function(){
-        // alert("BAM")
-        // a23
-        // console.log($(this).parent().find('td').eq(0).text())
-
-        // edit_id = $(this).parent().find('td').eq(0).text()
         edit_id = $(this).attr('id').substring(1)
         console.log(edit_id)
 
+        getCalendarData()
+    })
+
+    $('body').on('touchend', '#data .edit', function(){
+        edit_id = $(this).attr('id').substring(1)
+        console.log(edit_id)
+
+        getCalendarData()
+    })
+
+    function getCalendarData() {
         $.ajax({
             url: "calendar_get.php",
             type: 'get',
@@ -235,7 +261,7 @@ $( document ).ready(function() {
             $('#description').val(data.description)
             $('#time').val(data.time)
         });
-    })
+    }
 
     $('body').on('click', '#delete', function(){
 
@@ -278,26 +304,4 @@ $( document ).ready(function() {
             display_calendars()
         });
     })
-
-    // a23
-    // $('#search').keyup(function(){
-    //     var val = $('#search').val();
-    //     val = val.toLowerCase()
-
-    //     // console.log($('#data tr'))
-
-    //     $('#data tr').css('display', 'table-row')
-
-    //     $.each($('#data tr'), function(i, v){
-    //         if(i != 0) {
-    //             var name = $(v).children().eq(1).text()
-    //             var email = $(v).children().eq(2).text()
-    //             var phone = $(v).children().eq(3).text()
-
-    //             if(name.toLowerCase().indexOf(val) == -1 && email.toLowerCase().indexOf(val) == -1 && phone.toLowerCase().indexOf(val) == -1) {
-    //                 $(v).css('display', 'none')
-    //             }
-    //         }
-    //     })
-    // })
 });

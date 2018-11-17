@@ -43,6 +43,20 @@ body {
     border-color: #ff4828;
 }
 
+/* #data {
+    overflow-x: scroll;
+} */
+
+.table_parent {
+    background-color: white;
+    overflow-x: scroll;
+    margin-bottom: 1rem;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
 /* 
 colours:
 #2879FF - blue
@@ -50,37 +64,3 @@ colours:
 #fff - white
 #ff4828 - red
 */
-
-body#home {
-    background-color: #2879FF;
-    color: white;
-}
-
-#heading {
-    text-align: center;
-    margin: 70px 0;
-}
-
-#list {
-    font-size: 30px;
-    margin-top: 55px;
-}
-
-#login, #create_account {
-    display: block;
-    margin: 40px auto;
-    font-size: 25px;
-    width: 230px;
-    height: 87px;
-    
-}
-
-#login:hover, #create_account:hover {
-    background-color: #80AFFF;
-    color: white;
-}
-
-#list_parent {
-    margin: auto;
-    width: 300px;
-}

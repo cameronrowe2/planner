@@ -30,7 +30,7 @@ if(!isset($_SESSION['ID'])){
             <div id="content">
                 <input id="search">
                 <button id="add">add</button>
-                <div id="data">
+                <div id="data" class="table_parent">
                 </div>            
             </div>
         </div>

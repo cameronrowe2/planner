@@ -11,6 +11,12 @@ $( document ).ready(function() {
         $('#mask').hide();
     })
 
+    $('body').on('touchend', '#mask', function(){
+        $('#login_popup').hide();
+        $('#create_account_popup').hide();
+        $('#mask').hide();
+    })
+
     $('body').on('click', '#create_account', function(){
         $('#create_account_popup').show();
         $('#mask').show();

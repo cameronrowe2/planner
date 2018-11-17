@@ -15,7 +15,23 @@ $( document ).ready(function() {
         $('#submit').show();
     })
 
+    $('body').on('touchend', '.add', function(){
+        edit_date = $(this).attr('id').substring(1);
+        $('#dairy_popup').show();
+        $('#mask').show();
+
+        $('#save_edit').hide();
+        $('#submit').hide();
+        $('#delete').hide();
+        $('#submit').show();
+    })
+
     $('body').on('click', '#mask', function(){
+        $('#dairy_popup').hide();
+        $('#mask').hide();
+    })
+
+    $('body').on('touchend', '#mask', function(){
         $('#dairy_popup').hide();
         $('#mask').hide();
     })
@@ -161,7 +177,7 @@ $( document ).ready(function() {
             // start month
             html += "<h3>" + str_month(d.getMonth()) + " " + d.getFullYear() + "</h3>"
 
-            html += "<table class='data table' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
+            html += "<div class='table_parent'><table class='data table' ><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>"
 
             // start
             html += "<tr>"
@@ -196,12 +212,12 @@ $( document ).ready(function() {
                     console.log(v.ID)
                     if(v.date == get_date(d2)) {
                         exists = true;
-                        html += "<td class='edit' id='c" + v.ID + "'>" + get_date(d2) + "</td>"
+                        html += "<td class='edit' id='c" + v.ID + "'>" + get_date(d2).substring(8) + "</td>"
                     }
                 })
 
                 if(!exists) {
-                    html += "<td class='add' id='d" + get_date(d2) + "'>" + get_date(d2) + "</td>"
+                    html += "<td class='add' id='d" + get_date(d2) + "'>" + get_date(d2).substring(8) + "</td>"
                 }
 
                 if(d2.getDay() == 6) {
@@ -222,7 +238,7 @@ $( document ).ready(function() {
             html += "</tr>"
 
             // end month
-            html += "</table>"
+            html += "</table></div>"
 
             
             d.setDate(1)
@@ -327,14 +343,22 @@ $( document ).ready(function() {
     // }
 
     $('body').on('click', '.edit', function(){
-        // alert("BAM")
-        // a23
-        // console.log($(this).parent().find('td').eq(0).text())
 
-        // edit_id = $(this).parent().find('td').eq(0).text()
         edit_id = $(this).attr('id').substring(1)
         console.log(edit_id)
 
+        getDairy();
+    })
+
+    $('body').on('touchend', '.edit', function(){
+        
+        edit_id = $(this).attr('id').substring(1)
+        console.log(edit_id)
+
+        getDairy();
+    })
+
+    function getDairy() {
         $.ajax({
             url: "dairy_get.php",
             type: 'get',
@@ -359,7 +383,7 @@ $( document ).ready(function() {
             $('#title').val(data.title)
             $('#description').val(data.description)
         });
-    })
+    }
 
     $('body').on('click', '#delete', function(){
 

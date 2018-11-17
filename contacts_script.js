@@ -17,6 +17,11 @@ $( document ).ready(function() {
         $('#mask').hide();
     })
 
+    $('body').on('touchend', '#mask', function(){
+        $('#contact_popup').hide();
+        $('#mask').hide();
+    })
+
     $('#submit').click(function(){
         var name = $('#name').val();
         var email = $('#email').val();
@@ -82,10 +87,22 @@ $( document ).ready(function() {
     }
 
     $('body').on('click', '#data .edit', function(){
-        // alert("BAM")
-        console.log($(this).parent().find('td').eq(0).text())
 
+        console.log($(this).parent().find('td').eq(0).text())
         edit_id = $(this).parent().find('td').eq(0).text()
+        
+        getContact()
+    })
+
+    $('body').on('touchend', '#data .edit', function(){
+
+        console.log($(this).parent().find('td').eq(0).text())
+        edit_id = $(this).parent().find('td').eq(0).text()
+        
+        getContact()
+    })
+
+    function getContact() {
 
         $.ajax({
             url: "contact_get.php",
@@ -114,13 +131,25 @@ $( document ).ready(function() {
             $('#address').val(data.address)
             $('#comments').val(data.comments)
         });
-    })
+    }
 
     $('body').on('click', '#data .delete', function(){
-        // alert("BAM")
-        console.log($(this).parent().find('td').eq(0).text())
 
+        console.log($(this).parent().find('td').eq(0).text())
         var id = $(this).parent().find('td').eq(0).text()
+
+        deleteContact(id)
+    })
+
+    $('body').on('touchend', '#data .delete', function(){
+
+        console.log($(this).parent().find('td').eq(0).text())
+        var id = $(this).parent().find('td').eq(0).text()
+
+        deleteContact(id)
+    })
+
+    function deleteContact(id){
 
         $.ajax({
             url: "contact_delete.php",
@@ -133,7 +162,8 @@ $( document ).ready(function() {
         .done(function( data ) {
             display_contacts()
         });
-    })
+
+    }
 
     $('#save_edit').click(function(){
 

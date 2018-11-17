@@ -17,6 +17,11 @@ $( document ).ready(function() {
         $('#mask').hide();
     })
 
+    $('body').on('touchend', '#mask', function(){
+        $('#note_popup').hide();
+        $('#mask').hide();
+    })
+
     $('#submit').click(function(){
         var title = $('#title').val();
         var description = $('#description').val();
@@ -77,11 +82,22 @@ $( document ).ready(function() {
     }
 
     $('body').on('click', '#data .edit', function(){
-        // alert("BAM")
-        console.log($(this).parent().find('td').eq(0).text())
 
+        console.log($(this).parent().find('td').eq(0).text())
         edit_id = $(this).parent().find('td').eq(0).text()
 
+        getNote()
+    })
+
+    $('body').on('touchend', '#data .edit', function(){
+
+        console.log($(this).parent().find('td').eq(0).text())
+        edit_id = $(this).parent().find('td').eq(0).text()
+
+        getNote()
+    })
+
+    function getNote() {
         $.ajax({
             url: "note_get.php",
             type: 'get',
@@ -103,14 +119,25 @@ $( document ).ready(function() {
             $('#title').val(data.title)
             $('#description').val(data.description)
         });
-    })
+    }
 
     $('body').on('click', '#data .delete', function(){
-        // alert("BAM")
-        console.log($(this).parent().find('td').eq(0).text())
 
+        console.log($(this).parent().find('td').eq(0).text())
         var id = $(this).parent().find('td').eq(0).text()
 
+        deleteNote(id)
+    })
+
+    $('body').on('touchend', '#data .delete', function(){
+
+        console.log($(this).parent().find('td').eq(0).text())
+        var id = $(this).parent().find('td').eq(0).text()
+
+        deleteNote(id)
+    })
+
+    function deleteNote(id){
         $.ajax({
             url: "note_delete.php",
             type: 'get',
@@ -122,7 +149,7 @@ $( document ).ready(function() {
         .done(function( data ) {
             display_notes()
         });
-    })
+    }
 
     $('#save_edit').click(function(){
 

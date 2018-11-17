@@ -36,9 +36,44 @@
     display: none;
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 20;
     background-color: rgba(0, 0, 0, 0.6);;
+}
+
+body#home {
+    background-color: #2879FF;
+    color: white;
+}
+
+#heading {
+    text-align: center;
+    margin: 70px 0;
+}
+
+#list {
+    font-size: 30px;
+    margin-top: 55px;
+}
+
+#login, #create_account {
+    display: block;
+    margin: 40px auto;
+    font-size: 25px;
+    width: 230px;
+    height: 87px;
+    background-color: white;
+    color: black;
+}
+
+#login:hover, #create_account:hover {
+    background-color: #80AFFF;
+    color: white;
+}
+
+#list_parent {
+    margin: auto;
+    width: 300px;
 }
