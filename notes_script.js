@@ -46,12 +46,15 @@ $( document ).ready(function() {
           })
         .done(function( data ) {
 
-            var html = '<tr><th>ID</th><th>Title</th><th>Description</th><th></th><th></th></tr>'
+            var html = '<table class="table">'
+            html += '<tr><th>ID</th><th>Title</th><th>Description</th><th></th><th></th></tr>'
 
             data.forEach(function(v, i, a){
                 html += tablehtml(v)
             })
     
+            html += '</table>'
+
             $('#data').html(html);
 
             if(callback != null){
@@ -70,7 +73,7 @@ $( document ).ready(function() {
         }
         
 
-        return '<tr><td>'+v.ID+'</td><td>'+v.title+'</td><td>'+description+'</td><td style="background-color: green" class="edit">EDIT</td><td style="background-color: red" class="delete">DELETE</td></tr>';
+        return '<tr><td>'+v.ID+'</td><td>'+v.title+'</td><td>'+description+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
     }
 
     $('body').on('click', '#data .edit', function(){

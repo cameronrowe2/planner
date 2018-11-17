@@ -58,11 +58,14 @@ $( document ).ready(function() {
           })
         .done(function( data ) {
 
-            var html = '<tr><th>ID</th><th>Name</th><th>Email</th><th>Mobile</th><th></th><th></th></tr>'
+            var html = '<table class="table">'
+            html += '<tr><th>ID</th><th>Name</th><th>Email</th><th>Mobile</th><th></th><th></th></tr>'
 
             data.forEach(function(v, i, a){
                 html += tablehtml(v)
             })
+
+            html += '</table>'
     
             $('#data').html(html);
 
@@ -75,7 +78,7 @@ $( document ).ready(function() {
     display_contacts()
 
     function tablehtml(v){
-        return '<tr><td>'+v.ID+'</td><td>'+v.name+'</td><td>'+v.email+'</td><td>'+v.mobile+'</td><td style="background-color: green" class="edit">EDIT</td><td style="background-color: red" class="delete">DELETE</td></tr>';
+        return '<tr><td>'+v.ID+'</td><td>'+v.name+'</td><td>'+v.email+'</td><td>'+v.mobile+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
     }
 
     $('body').on('click', '#data .edit', function(){

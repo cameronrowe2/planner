@@ -6,7 +6,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    width: 180px;
+    width: 300px;
     padding: 10px;
 }
 
@@ -27,5 +27,8 @@
 }
 
 .edit {
-    border: 5px solid red;
+    background-color: rgba(40, 121, 255, 0.6);
+    color: white;
+    margin-top: 5px;
+    padding: 3px 3px 3px 7px;
 }

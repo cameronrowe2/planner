@@ -6,3 +6,81 @@
 #content {
     padding-top: 70px;
 }
+
+#data table {
+    width: 100%;
+}
+
+.table td, .table th {
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#header > nav {
+    background-color: #2879FF;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+#navbarNav > ul > li > a {
+    color: white;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+#data table {
+    background-color: white;
+}
+
+.btn-delete {
+    color: #fff;
+    background-color: #ff4828;
+    border-color: #ff4828;
+}
+
+/* 
+colours:
+#2879FF - blue
+#F5F5F5 - grey
+#fff - white
+#ff4828 - red
+*/
+
+body#home {
+    background-color: #2879FF;
+    color: white;
+}
+
+#heading {
+    text-align: center;
+    margin: 70px 0;
+}
+
+#list {
+    font-size: 30px;
+    margin-top: 55px;
+}
+
+#login, #create_account {
+    display: block;
+    margin: 40px auto;
+    font-size: 25px;
+    width: 230px;
+    height: 87px;
+    
+}
+
+#login:hover, #create_account:hover {
+    background-color: #80AFFF;
+    color: white;
+}
+
+#list_parent {
+    margin: auto;
+    width: 300px;
+}

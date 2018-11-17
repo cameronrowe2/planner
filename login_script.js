@@ -16,7 +16,7 @@ $( document ).ready(function() {
         .done(function( data ) {
             console.log(data)
             if(data.success) {
-                window.location.href = "menu.php"
+                window.location.href = "calendar.php"
             }
             
         });

@@ -1,12 +1,12 @@
 #note_popup {
     display: none;
-    position: absolute;
+    position: fixed;
     z-index: 21;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    width: 180px;
+    width: 300px;
     padding: 10px;
 }
 
@@ -19,9 +19,21 @@
     display: none;
     height: 100%;
     width: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 20;
     background-color: rgba(0, 0, 0, 0.6);;
+}
+
+.edit {
+    background-color: #2879FF;
+    color: white;
+    text-align: center;
+}
+
+.delete {
+    background-color: #ff4828;
+    color: white;
+    text-align: center;
 }
