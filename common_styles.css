@@ -19,6 +19,7 @@
 
 #header > nav {
     background-color: #2879FF;
+    z-index: 10;
 }
 
 .navbar-brand {

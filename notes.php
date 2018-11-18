@@ -28,8 +28,15 @@ if(!isset($_SESSION['ID'])){
 
         <div class="container">
             <div id="content">
-                <input id="search">
-                <button id="add">add</button>
+                <div class="row" id="top_content">
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" id="search" placeholder="Search...">
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" id="add">Add</button>
+                    </div>
+                </div>
+
                 <div id="data" class="table_parent">
                 </div>            
             </div>

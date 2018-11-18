@@ -37,3 +37,18 @@
     color: white;
     text-align: center;
 }
+
+#nothing_here {
+    text-align: center;
+    font-weight: bold;
+}
+
+#top_content {
+    margin-bottom: 13px;
+}
+
+@media (max-width: 767px) {
+    #add {
+        margin-top: 13px;
+    }
+}

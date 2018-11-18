@@ -197,7 +197,13 @@ $( document ).ready(function() {
             data.forEach(function(v){
                 if(v.date == get_date(d)) {
                     console.log('in')
-                    html += "<div class='edit' id='c" + v.ID + "'>" + v.title + "</div>"
+
+                    var date_title = v.title;
+                    if(date_title.length > 10) {
+                        date_title = date_title.substring(0, 10) + "..."
+                    }
+
+                    html += "<div class='edit' id='c" + v.ID + "'>" + date_title + "</div>"
                 }
             })
             

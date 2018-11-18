@@ -62,6 +62,10 @@ $( document ).ready(function() {
             data.forEach(function(v, i, a){
                 html += tablehtml(v)
             })
+
+            if(data.length == 0) {
+                html += '<tr><td id="nothing_here" colspan="100%">Nothing Here</td></tr>'
+            }
     
             html += '</table>'
 
@@ -78,12 +82,17 @@ $( document ).ready(function() {
     function tablehtml(v){
 
         var description = v.description
-        if(description.length > 20) {
-            var description = description.substring(0, 20) + "..."
+        if(description.length > 40) {
+            var description = description.substring(0, 40) + "..."
+        }
+
+        var title = v.title;
+        if(title.length > 20) {
+            title = title.substring(0, 20) + "..."
         }
         
 
-        return '<tr><td>'+v.ID+'</td><td>'+v.title+'</td><td>'+description+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
+        return '<tr><td>'+v.ID+'</td><td>'+title+'</td><td>'+description+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
     }
 
     $('body').on('click', '#data .edit', function(){

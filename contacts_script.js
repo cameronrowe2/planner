@@ -72,6 +72,10 @@ $( document ).ready(function() {
                 html += tablehtml(v)
             })
 
+            if(data.length == 0) {
+                html += '<tr><td id="nothing_here" colspan="100%">Nothing Here</td></tr>'
+            }
+
             html += '</table>'
     
             $('#data').html(html);
@@ -85,7 +89,23 @@ $( document ).ready(function() {
     display_contacts()
 
     function tablehtml(v){
-        return '<tr><td>'+v.ID+'</td><td>'+v.name+'</td><td>'+v.email+'</td><td>'+v.mobile+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
+
+        var name = v.name;
+        if(name.length > 30) {
+            name = name.substring(0, 30) + "..."
+        }
+
+        var email = v.email;
+        if(email.length > 50) {
+            email = email.substring(0, 50) + "..."
+        }
+
+        var mobile = v.mobile;
+        if(mobile.length > 20) {
+            mobile = mobile.substring(0, 20) + "..."
+        }
+
+        return '<tr><td>'+v.ID+'</td><td>'+name+'</td><td>'+email+'</td><td>'+mobile+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
     }
 
     $('body').on('click', '#data .edit', function(){
