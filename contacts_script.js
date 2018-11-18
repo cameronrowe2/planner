@@ -18,8 +18,10 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '#mask', function(){
-        $('#contact_popup').hide();
-        $('#mask').hide();
+        if(documentClick){
+            $('#contact_popup').hide();
+            $('#mask').hide();
+        }
     })
 
     $('#submit').click(function(){
@@ -96,10 +98,13 @@ $( document ).ready(function() {
 
     $('body').on('touchend', '#data .edit', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        edit_id = $(this).parent().find('td').eq(0).text()
-        
-        getContact()
+        if(documentClick) {
+
+            console.log($(this).parent().find('td').eq(0).text())
+            edit_id = $(this).parent().find('td').eq(0).text()
+            
+            getContact()
+        }
     })
 
     function getContact() {
@@ -143,10 +148,13 @@ $( document ).ready(function() {
 
     $('body').on('touchend', '#data .delete', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        var id = $(this).parent().find('td').eq(0).text()
+        if(documentClick){
 
-        deleteContact(id)
+            console.log($(this).parent().find('td').eq(0).text())
+            var id = $(this).parent().find('td').eq(0).text()
+
+            deleteContact(id)
+        }
     })
 
     function deleteContact(id){

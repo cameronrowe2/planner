@@ -16,14 +16,19 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '.add', function(){
-        edit_date = $(this).attr('id').substring(1);
-        $('#dairy_popup').show();
-        $('#mask').show();
 
-        $('#save_edit').hide();
-        $('#submit').hide();
-        $('#delete').hide();
-        $('#submit').show();
+        if(documentClick) {
+
+            edit_date = $(this).attr('id').substring(1);
+            $('#dairy_popup').show();
+            $('#mask').show();
+
+            $('#save_edit').hide();
+            $('#submit').hide();
+            $('#delete').hide();
+            $('#submit').show();
+
+        }
     })
 
     $('body').on('click', '#mask', function(){
@@ -32,8 +37,13 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '#mask', function(){
-        $('#dairy_popup').hide();
-        $('#mask').hide();
+
+        if(documentClick) {
+
+            $('#dairy_popup').hide();
+            $('#mask').hide();
+
+        }
     })
 
     $('#submit').click(function(){
@@ -351,11 +361,14 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '.edit', function(){
-        
-        edit_id = $(this).attr('id').substring(1)
-        console.log(edit_id)
 
-        getDairy();
+        if(documentClick) {
+        
+            edit_id = $(this).attr('id').substring(1)
+            console.log(edit_id)
+
+            getDairy();
+        }
     })
 
     function getDairy() {

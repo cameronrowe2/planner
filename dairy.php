@@ -16,9 +16,9 @@ if(!isset($_SESSION['ID'])){
         <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
         <script src="jquery.min.js"></script>
         <script src="bootstrap.bundle.min.js"></script>
+        <script src="common_script.js"></script>
         <script src="dairy_script.js"></script>
         <link rel="stylesheet" type="text/css" href="dairy_styles.css">
-        <script src="common_script.js"></script>
         <link rel="stylesheet" type="text/css" href="common_styles.css">
         
     </head>

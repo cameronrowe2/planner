@@ -1,3 +1,5 @@
+var documentClick;
+
 $( document ).ready(function() {
     console.log( "ready!" );
 
@@ -34,4 +36,13 @@ $( document ).ready(function() {
                 '</div>' +
             '</nav>')
     }
+
+    $(document).on('touchstart', function() {
+        console.log('touchstart')
+        documentClick = true;
+    });
+    $(document).on('touchmove', function() {
+        console.log('touchmove')
+        documentClick = false;
+    });
 });

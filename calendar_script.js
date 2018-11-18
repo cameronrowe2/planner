@@ -18,16 +18,23 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '.add', function(){
-        edit_date = $(this).attr('id').substring(1);
-        $('#calendar_popup').show();
-        setTimeout(function(){
-            $('#mask').show();
-        }, 300)
 
-        $('#save_edit').hide();
-        $('#submit').hide();
-        $('#delete').hide();
-        $('#submit').show();
+        if(documentClick){
+            
+            edit_date = $(this).attr('id').substring(1);
+            $('#calendar_popup').show();
+            setTimeout(function(){
+                $('#mask').show();
+            }, 300)
+
+            $('#save_edit').hide();
+            $('#submit').hide();
+            $('#delete').hide();
+            $('#submit').show();
+
+        }
+
+        
     })
 
     $('body').on('click', '#mask', function(){
@@ -36,8 +43,10 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '#mask', function(){
-        $('#calendar_popup').hide();
-        $('#mask').hide();
+        if(documentClick){
+            $('#calendar_popup').hide();
+            $('#mask').hide();
+        }
     })
 
     $('#submit').click(function(){
@@ -229,10 +238,12 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '#data .edit', function(){
-        edit_id = $(this).attr('id').substring(1)
-        console.log(edit_id)
+        if(documentClick){
+            edit_id = $(this).attr('id').substring(1)
+            console.log(edit_id)
 
-        getCalendarData()
+            getCalendarData()
+        }
     })
 
     function getCalendarData() {

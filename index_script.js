@@ -12,9 +12,14 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '#mask', function(){
-        $('#login_popup').hide();
-        $('#create_account_popup').hide();
-        $('#mask').hide();
+
+        if(documentClick) {
+
+            $('#login_popup').hide();
+            $('#create_account_popup').hide();
+            $('#mask').hide();
+
+        }
     })
 
     $('body').on('click', '#create_account', function(){

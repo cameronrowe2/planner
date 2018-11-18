@@ -18,8 +18,13 @@ $( document ).ready(function() {
     })
 
     $('body').on('touchend', '#mask', function(){
-        $('#note_popup').hide();
-        $('#mask').hide();
+
+        if(documentClick) {
+
+            $('#note_popup').hide();
+            $('#mask').hide();
+
+        }
     })
 
     $('#submit').click(function(){
@@ -91,10 +96,13 @@ $( document ).ready(function() {
 
     $('body').on('touchend', '#data .edit', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        edit_id = $(this).parent().find('td').eq(0).text()
+        if(documentClick) {
 
-        getNote()
+            console.log($(this).parent().find('td').eq(0).text())
+            edit_id = $(this).parent().find('td').eq(0).text()
+
+            getNote()
+        }
     })
 
     function getNote() {
@@ -131,10 +139,13 @@ $( document ).ready(function() {
 
     $('body').on('touchend', '#data .delete', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        var id = $(this).parent().find('td').eq(0).text()
+        if(documentClick) {
 
-        deleteNote(id)
+            console.log($(this).parent().find('td').eq(0).text())
+            var id = $(this).parent().find('td').eq(0).text()
+
+            deleteNote(id)
+        }
     })
 
     function deleteNote(id){
