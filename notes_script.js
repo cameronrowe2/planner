@@ -60,7 +60,7 @@ $( document ).ready(function() {
         .done(function( data ) {
 
             var html = '<table class="table">'
-            html += '<tr><th>ID</th><th>Title</th><th>Description</th><th></th><th></th></tr>'
+            html += '<tr><th>Title</th><th>Description</th><th></th><th></th></tr>'
 
             data.forEach(function(v, i, a){
                 html += tablehtml(v)
@@ -95,13 +95,13 @@ $( document ).ready(function() {
         }
         
 
-        return '<tr><td>'+v.ID+'</td><td>'+title+'</td><td>'+description+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
+        return '<tr><td>'+title+'</td><td>'+description+'</td><td class="edit" id="e'+v.ID+'">EDIT</td><td class="delete" id="d'+v.ID+'">DELETE</td></tr>';
     }
 
     $('body').on('click', '#data .edit', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        edit_id = $(this).parent().find('td').eq(0).text()
+        console.log($(this).attr("id").substring(1))
+        edit_id = $(this).attr("id").substring(1)
 
         getNote()
     })
@@ -110,8 +110,8 @@ $( document ).ready(function() {
 
         if(documentClick) {
 
-            console.log($(this).parent().find('td').eq(0).text())
-            edit_id = $(this).parent().find('td').eq(0).text()
+            console.log($(this).attr("id").substring(1))
+            edit_id = $(this).attr("id").substring(1)
 
             getNote()
         }
@@ -143,8 +143,8 @@ $( document ).ready(function() {
 
     $('body').on('click', '#data .delete', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        var id = $(this).parent().find('td').eq(0).text()
+        console.log($(this).attr("id").substring(1))
+        var id = $(this).attr("id").substring(1)
 
         deleteNote(id)
     })
@@ -153,8 +153,8 @@ $( document ).ready(function() {
 
         if(documentClick) {
 
-            console.log($(this).parent().find('td').eq(0).text())
-            var id = $(this).parent().find('td').eq(0).text()
+            console.log($(this).attr("id").substring(1))
+            var id = $(this).attr("id").substring(1)
 
             deleteNote(id)
         }

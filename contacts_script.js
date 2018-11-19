@@ -85,7 +85,7 @@ $( document ).ready(function() {
         .done(function( data ) {
 
             var html = '<table class="table">'
-            html += '<tr><th>ID</th><th>Name</th><th>Email</th><th>Mobile</th><th></th><th></th></tr>'
+            html += '<tr><th>Name</th><th>Email</th><th>Mobile</th><th></th><th></th></tr>'
 
             data.forEach(function(v, i, a){
                 html += tablehtml(v)
@@ -124,13 +124,13 @@ $( document ).ready(function() {
             mobile = mobile.substring(0, 20) + "..."
         }
 
-        return '<tr><td>'+v.ID+'</td><td>'+name+'</td><td>'+email+'</td><td>'+mobile+'</td><td class="edit">EDIT</td><td class="delete">DELETE</td></tr>';
+        return '<tr><td>'+name+'</td><td>'+email+'</td><td>'+mobile+'</td><td class="edit" id="e'+v.ID+'">EDIT</td><td class="delete" id="d'+v.ID+'">DELETE</td></tr>';
     }
 
     $('body').on('click', '#data .edit', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        edit_id = $(this).parent().find('td').eq(0).text()
+        console.log($(this).attr("id").substring(1))
+        edit_id = $(this).attr("id").substring(1)
         
         getContact()
     })
@@ -139,8 +139,8 @@ $( document ).ready(function() {
 
         if(documentClick) {
 
-            console.log($(this).parent().find('td').eq(0).text())
-            edit_id = $(this).parent().find('td').eq(0).text()
+            console.log($(this).attr("id").substring(1))
+            edit_id = $(this).attr("id").substring(1)
             
             getContact()
         }
@@ -175,8 +175,8 @@ $( document ).ready(function() {
 
     $('body').on('click', '#data .delete', function(){
 
-        console.log($(this).parent().find('td').eq(0).text())
-        var id = $(this).parent().find('td').eq(0).text()
+        console.log($(this).attr("id").substring(1))
+        var id = $(this).attr("id").substring(1)
 
         deleteContact(id)
     })
@@ -185,8 +185,8 @@ $( document ).ready(function() {
 
         if(documentClick){
 
-            console.log($(this).parent().find('td').eq(0).text())
-            var id = $(this).parent().find('td').eq(0).text()
+            console.log($(this).attr("id").substring(1))
+            var id = $(this).attr("id").substring(1)
 
             deleteContact(id)
         }

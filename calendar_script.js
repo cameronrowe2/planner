@@ -47,13 +47,6 @@ $( document ).ready(function() {
         }
     })
 
-    $('#title, #description, #time').keyup(function(e){
-        if(e.keyCode == 13)
-        {
-            createCalendar()
-        }
-    });
-
     $('#submit').click(function(){
         createCalendar()
     })
@@ -300,13 +293,6 @@ $( document ).ready(function() {
             $('#mask').hide();
         });
     })
-
-    $('#title_edit, #description_edit, #time_edit').keyup(function(e){
-        if(e.keyCode == 13)
-        {
-            editCalendar()
-        }
-    });
 
     $('#save_edit').click(function(){
         editCalendar()

@@ -52,3 +52,9 @@
         margin-top: 13px;
     }
 }
+
+@media (min-width: 500px) {
+    #note_popup {
+        width: 60%;
+    }
+}

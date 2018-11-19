@@ -43,7 +43,7 @@ if(!isset($_SESSION['ID'])){
         </div>
         <div id="note_popup">
             <input class="form-control" type="text" id="title" placeholder="Title">
-            <textarea class="form-control" id="description" placeholder="Description" rows="3"></textarea>
+            <textarea class="form-control" id="description" placeholder="Description" rows="5"></textarea>
             <button class="btn btn-primary" id="submit">Submit</button>
             <button class="btn btn-primary" id="save_edit">Save</button>
         </div>
