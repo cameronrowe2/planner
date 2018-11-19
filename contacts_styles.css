@@ -1,4 +1,4 @@
-#contact_popup {
+#contact_popup, #contact_edit_popup {
     display: none;
     position: fixed;
     z-index: 21;
@@ -10,7 +10,7 @@
     padding: 10px;
 }
 
-#contact_popup * {
+#contact_popup *, #contact_edit_popup * {
     display: block;
     margin-bottom: 10px;
 }

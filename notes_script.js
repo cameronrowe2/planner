@@ -10,6 +10,9 @@ $( document ).ready(function() {
         $('#save_edit').hide();
         $('#submit').hide();
         $('#submit').show();
+
+        $('#title').val("");
+        $('#description').val("");
     })
 
     $('body').on('click', '#mask', function(){

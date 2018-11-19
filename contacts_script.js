@@ -7,24 +7,42 @@ $( document ).ready(function() {
         $('#contact_popup').show();
         $('#mask').show();
 
-        $('#save_edit').hide();
-        $('#submit').hide();
-        $('#submit').show();
+        $('#name').val("");
+        $('#email').val("");
+        $('#mobile').val("");
+        $('#phone').val("");
+        $('#reason').val("");
+        $('#website').val("");
+        $('#address').val("");
+        $('#comments').val("");
     })
 
     $('body').on('click', '#mask', function(){
         $('#contact_popup').hide();
+        $('#contact_edit_popup').hide();
         $('#mask').hide();
     })
 
     $('body').on('touchend', '#mask', function(){
         if(documentClick){
             $('#contact_popup').hide();
+            $('#contact_edit_popup').hide();
             $('#mask').hide();
         }
     })
 
+    $('#name, #email, #mobile, #phone, #reason, #website, #address, #comments').keyup(function(e){
+        if(e.keyCode == 13)
+        {
+            createContact()
+        }
+    });
+
     $('#submit').click(function(){
+        createContact()
+    })
+
+    function createContact(){
         var name = $('#name').val();
         var email = $('#email').val();
         var mobile = $('#mobile').val();
@@ -52,10 +70,11 @@ $( document ).ready(function() {
         .done(function( data ) {
             console.log(data)
             $('#contact_popup').hide();
+            $('#contact_edit_popup').hide();
             $('#mask').hide();
             display_contacts()
         });
-    })
+    }
 
     function display_contacts(callback) {
         $.ajax({
@@ -140,21 +159,17 @@ $( document ).ready(function() {
         .done(function( data ) {
             console.log(data)
 
-            $('#contact_popup').show();
+            $('#contact_edit_popup').show();
             $('#mask').show();
 
-            $('#save_edit').hide();
-            $('#submit').hide();
-            $('#save_edit').show();
-
-            $('#name').val(data.name)
-            $('#email').val(data.email)
-            $('#mobile').val(data.mobile)
-            $('#phone').val(data.phone)
-            $('#reason').val(data.reason)
-            $('#website').val(data.website)
-            $('#address').val(data.address)
-            $('#comments').val(data.comments)
+            $('#name_edit').val(data.name)
+            $('#email_edit').val(data.email)
+            $('#mobile_edit').val(data.mobile)
+            $('#phone_edit').val(data.phone)
+            $('#reason_edit').val(data.reason)
+            $('#website_edit').val(data.website)
+            $('#address_edit').val(data.address)
+            $('#comments_edit').val(data.comments)
         });
     }
 
@@ -193,16 +208,26 @@ $( document ).ready(function() {
 
     }
 
-    $('#save_edit').click(function(){
+    $('#name_edit, #email_edit, #mobile_edit, #phone_edit, #reason_edit, #website_edit, #address_edit, #comments_edit').keyup(function(e){
+        if(e.keyCode == 13)
+        {
+            editContact()
+        }
+    });
 
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var mobile = $('#mobile').val();
-        var phone = $('#phone').val();
-        var reason = $('#reason').val();
-        var website = $('#website').val();
-        var address = $('#address').val();
-        var comments = $('#comments').val();
+    $('#save_edit').click(function(){
+        editContact()
+    })
+
+    function editContact(){
+        var name = $('#name_edit').val();
+        var email = $('#email_edit').val();
+        var mobile = $('#mobile_edit').val();
+        var phone = $('#phone_edit').val();
+        var reason = $('#reason_edit').val();
+        var website = $('#website_edit').val();
+        var address = $('#address_edit').val();
+        var comments = $('#comments_edit').val();
 
         $.ajax({
             url: "contact_edit.php",
@@ -222,10 +247,11 @@ $( document ).ready(function() {
           })
         .done(function( data ) {
             $('#contact_popup').hide();
+            $('#contact_edit_popup').hide();
             $('#mask').hide();
             display_contacts()
         });
-    })
+    }
 
     $('#search').keyup(function(){
         var val = $('#search').val();

@@ -50,6 +50,16 @@ if(!isset($_SESSION['ID'])){
             <input class="form-control" type="text" id="address" placeholder="Address">
             <textarea class="form-control" id="comments" placeholder="Comments" rows="3"></textarea>
             <button class="btn btn-primary" id="submit">Submit</button>
+        </div>
+        <div id="contact_edit_popup">
+            <input class="form-control" type="text" id="name_edit" placeholder="Name">
+            <input class="form-control" type="text" id="email_edit" placeholder="Email">
+            <input class="form-control" type="text" id="mobile_edit" placeholder="Mobile">
+            <input class="form-control" type="text" id="phone_edit" placeholder="Home Phone">
+            <textarea class="form-control" id="reason_edit" placeholder="Reason for adding to contacts" rows="3"></textarea>
+            <input class="form-control" type="text" id="website_edit" placeholder="Website">
+            <input class="form-control" type="text" id="address_edit" placeholder="Address">
+            <textarea class="form-control" id="comments_edit" placeholder="Comments" rows="3"></textarea>
             <button class="btn btn-primary" id="save_edit">Save</button>
         </div>
         <div id="mask"></div>

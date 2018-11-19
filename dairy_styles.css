@@ -30,3 +30,9 @@
     background-color: rgba(40, 121, 255, 0.6);
     color: white;
 }
+
+@media (min-width: 500px) {
+    #dairy_popup {
+        width: 60%;
+    }
+}

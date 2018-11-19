@@ -45,4 +45,13 @@ $( document ).ready(function() {
         console.log('touchmove')
         documentClick = false;
     });
+
+    // get page
+    var page = window.location.pathname.substring(1);
+    page = page.substring(0, page.indexOf("."))
+    page = page[0].toUpperCase() + page.substring(1)
+    console.log(page)
+
+    // identify page
+    $('#navbarNav > .navbar-nav > .nav-item > a:contains("' + page + '")').css("font-weight", "bold")
 });

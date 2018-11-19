@@ -13,6 +13,9 @@ $( document ).ready(function() {
         $('#submit').hide();
         $('#delete').hide();
         $('#submit').show();
+
+        $('#title').val("")
+        $('#description').val("")
     })
 
     $('body').on('touchend', '.add', function(){
@@ -28,6 +31,8 @@ $( document ).ready(function() {
             $('#delete').hide();
             $('#submit').show();
 
+            $('#title').val("")
+            $('#description').val("")
         }
     })
 

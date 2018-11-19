@@ -11,10 +11,9 @@ $( document ).ready(function() {
             $('#mask').show();
         }, 300)
 
-        $('#save_edit').hide();
-        $('#submit').hide();
-        $('#delete').hide();
-        $('#submit').show();
+        $('#title').val("")
+        $('#description').val("")
+        $('#time').val("")
     })
 
     $('body').on('touchend', '.add', function(){
@@ -27,29 +26,39 @@ $( document ).ready(function() {
                 $('#mask').show();
             }, 300)
 
-            $('#save_edit').hide();
-            $('#submit').hide();
-            $('#delete').hide();
-            $('#submit').show();
+            $('#title').val("")
+            $('#description').val("")
+            $('#time').val("")
 
         }
-
-        
     })
 
     $('body').on('click', '#mask', function(){
         $('#calendar_popup').hide();
+        $('#calendar_edit_popup').hide();
         $('#mask').hide();
     })
 
     $('body').on('touchend', '#mask', function(){
         if(documentClick){
             $('#calendar_popup').hide();
+            $('#calendar_edit_popup').hide();
             $('#mask').hide();
         }
     })
 
+    $('#title, #description, #time').keyup(function(e){
+        if(e.keyCode == 13)
+        {
+            createCalendar()
+        }
+    });
+
     $('#submit').click(function(){
+        createCalendar()
+    })
+
+    function createCalendar(){
         var title = $('#title').val();
         var description = $('#description').val();
         var time = $('#time').val();
@@ -71,7 +80,7 @@ $( document ).ready(function() {
             $('#mask').hide();
             display_calendars()
         });
-    })
+    }
 
     function display_calendars(callback) {
         $.ajax({
@@ -199,8 +208,8 @@ $( document ).ready(function() {
                     console.log('in')
 
                     var date_title = v.title;
-                    if(date_title.length > 10) {
-                        date_title = date_title.substring(0, 10) + "..."
+                    if(date_title.length > 20) {
+                        date_title = date_title.substring(0, 20) + "..."
                     }
 
                     html += "<div class='edit' id='c" + v.ID + "'>" + date_title + "</div>"
@@ -264,19 +273,13 @@ $( document ).ready(function() {
         .done(function( data ) {
             console.log(data)
 
-            $('#calendar_popup').show();
+            $('#calendar_edit_popup').show();
             $('#mask').show();
 
-            $('#save_edit').hide();
-            $('#submit').hide();
-            $('#delete').hide();
-            $('#save_edit').show();
-            $('#delete').show();
-
             edit_date = data.date
-            $('#title').val(data.title)
-            $('#description').val(data.description)
-            $('#time').val(data.time)
+            $('#title_edit').val(data.title)
+            $('#description_edit').val(data.description)
+            $('#time_edit').val(data.time)
         });
     }
 
@@ -293,15 +296,26 @@ $( document ).ready(function() {
         .done(function( data ) {
             display_calendars()
             $('#calendar_popup').hide();
+            $('#calendar_edit_popup').hide();
             $('#mask').hide();
         });
     })
 
-    $('#save_edit').click(function(){
+    $('#title_edit, #description_edit, #time_edit').keyup(function(e){
+        if(e.keyCode == 13)
+        {
+            editCalendar()
+        }
+    });
 
-        var title = $('#title').val();
-        var description = $('#description').val();
-        var time = $('#time').val();
+    $('#save_edit').click(function(){
+        editCalendar()
+    })
+
+    function editCalendar(){
+        var title = $('#title_edit').val();
+        var description = $('#description_edit').val();
+        var time = $('#time_edit').val();
 
         $.ajax({
             url: "calendar_edit.php",
@@ -317,8 +331,9 @@ $( document ).ready(function() {
           })
         .done(function( data ) {
             $('#calendar_popup').hide();
+            $('#calendar_edit_popup').hide();
             $('#mask').hide();
             display_calendars()
         });
-    })
+    }
 });

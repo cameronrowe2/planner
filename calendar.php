@@ -38,6 +38,11 @@ if(!isset($_SESSION['ID'])){
             <textarea class="form-control" type="text" id="description" placeholder="Description" rows="3"></textarea>
             <input class="form-control" type="time" id="time" placeholder="Time">
             <button class="btn btn-primary" id="submit">Submit</button>
+        </div>
+        <div id="calendar_edit_popup">
+            <input class="form-control" type="text" id="title_edit" placeholder="Title">
+            <textarea class="form-control" type="text" id="description_edit" placeholder="Description" rows="3"></textarea>
+            <input class="form-control" type="time" id="time_edit" placeholder="Time">
             <button class="btn btn-primary" id="save_edit">Save</button>
             <button class="btn btn-delete" id="delete">Delete</button>
         </div>
