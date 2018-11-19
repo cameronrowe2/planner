@@ -14,6 +14,10 @@ $( document ).ready(function() {
         $('#title').val("")
         $('#description').val("")
         $('#time').val("")
+        $('#save_edit').hide();
+        $('#submit').hide();
+        $('#delete').hide();
+        $('#submit').show();
     })
 
     $('body').on('touchend', '.add', function(){
@@ -29,29 +33,29 @@ $( document ).ready(function() {
             $('#title').val("")
             $('#description').val("")
             $('#time').val("")
+            $('#save_edit').hide();
+            $('#submit').hide();
+            $('#delete').hide();
+            $('#submit').show();
 
         }
+
+        
     })
 
     $('body').on('click', '#mask', function(){
         $('#calendar_popup').hide();
-        $('#calendar_edit_popup').hide();
         $('#mask').hide();
     })
 
     $('body').on('touchend', '#mask', function(){
         if(documentClick){
             $('#calendar_popup').hide();
-            $('#calendar_edit_popup').hide();
             $('#mask').hide();
         }
     })
 
     $('#submit').click(function(){
-        createCalendar()
-    })
-
-    function createCalendar(){
         var title = $('#title').val();
         var description = $('#description').val();
         var time = $('#time').val();
@@ -73,7 +77,7 @@ $( document ).ready(function() {
             $('#mask').hide();
             display_calendars()
         });
-    }
+    })
 
     function display_calendars(callback) {
         $.ajax({
@@ -266,13 +270,19 @@ $( document ).ready(function() {
         .done(function( data ) {
             console.log(data)
 
-            $('#calendar_edit_popup').show();
+            $('#calendar_popup').show();
             $('#mask').show();
 
+            $('#save_edit').hide();
+            $('#submit').hide();
+            $('#delete').hide();
+            $('#save_edit').show();
+            $('#delete').show();
+
             edit_date = data.date
-            $('#title_edit').val(data.title)
-            $('#description_edit').val(data.description)
-            $('#time_edit').val(data.time)
+            $('#title').val(data.title)
+            $('#description').val(data.description)
+            $('#time').val(data.time)
         });
     }
 
@@ -289,19 +299,15 @@ $( document ).ready(function() {
         .done(function( data ) {
             display_calendars()
             $('#calendar_popup').hide();
-            $('#calendar_edit_popup').hide();
             $('#mask').hide();
         });
     })
 
     $('#save_edit').click(function(){
-        editCalendar()
-    })
 
-    function editCalendar(){
-        var title = $('#title_edit').val();
-        var description = $('#description_edit').val();
-        var time = $('#time_edit').val();
+        var title = $('#title').val();
+        var description = $('#description').val();
+        var time = $('#time').val();
 
         $.ajax({
             url: "calendar_edit.php",
@@ -317,9 +323,8 @@ $( document ).ready(function() {
           })
         .done(function( data ) {
             $('#calendar_popup').hide();
-            $('#calendar_edit_popup').hide();
             $('#mask').hide();
             display_calendars()
         });
-    }
+    })
 });

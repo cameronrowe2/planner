@@ -1,4 +1,4 @@
-#calendar_popup, #calendar_edit_popup {
+#calendar_popup {
     display: none;
     position: fixed;
     z-index: 21;
@@ -10,7 +10,7 @@
     padding: 10px;
 }
 
-#calendar_popup *, #calendar_edit_popup * {
+#calendar_popup * {
     display: block;
     margin-bottom: 10px;
 }
