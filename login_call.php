@@ -66,6 +66,7 @@ if($stmt->fetch()){
         }
     }
 } else {
+    $stmt->close();
     echo json_encode(["success" => false]);
 }
 
